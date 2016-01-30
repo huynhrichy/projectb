@@ -1,11 +1,13 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
 
-var player, enemies, enemySpeed, tilemap, backgroundLayer, worldLayer, objectLayer, cursors;
+var player, enemies, fires, objective, enemySpeed, tilemap, backgroundLayer, worldLayer, objectLayer, cursors;
 
 function preload() {
     game.load.image('playertile', 'assets/playertile.png');
     game.load.image('enemytile', 'assets/enemytile.png');
+    game.load.image('enemytile2', 'assets/enemytile2.png');
     game.load.image('tileset', 'assets/tilesetcolours.png');
+    game.load.image('wintile', 'assets/wintile.png');
     game.load.tilemap('tilemap', 'assets/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 }
 
@@ -15,6 +17,8 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
     
     startNewGame();
+    
+    game.time.events.loop(1000, changeGameWithMusic, this);
 }
 
 function update() {
@@ -25,6 +29,11 @@ function update() {
 
 function startNewGame() {
     createWorld();
+    resetGame();
+}
+
+function resetGame() {
+    createObjective();
     createEnemies();
     createPlayer();
 }
@@ -39,6 +48,12 @@ function createWorld() {
     tilemap.setCollision(2, true, 'worldLayer');
     
     backgroundLayer.resizeWorld();
+}
+
+function createObjective() {
+    objects = findObjectsByType('objective', tilemap, 'objectLayer');
+    objective = game.add.sprite(objects[0].x, objects[0].y, 'wintile');
+    game.physics.arcade.enable(objective);
 }
 
 function createPlayer() {
@@ -62,32 +77,34 @@ function createEnemies() {
         createFromTiledObject(element, enemies);
     });
     
+    enemies.setAll('facingLeft', true, false, false, 0, true);
     enemies.setAll('body.gravity.y', 200);
     enemies.setAll('body.bounce.y', 0.2);
-    enemies.setAll('facingRight', false);
     enemies.setAll('body.collideWorldBounds', true);
     enemySpeed = 175;
+    enemies.setAll('body.velocity.x', -enemySpeed);
 }
 
 function handleCollision() {
     game.physics.arcade.collide(player, worldLayer);
     game.physics.arcade.collide(enemies, worldLayer);
     game.physics.arcade.collide(enemies);
+    game.physics.arcade.overlap(player, objective, winGame);
     game.physics.arcade.overlap(player, enemies, killPlayer);
 }
 
-function moveEnemies() {
+function moveEnemiesBasic() {
     enemies.forEachAlive(function(enemy) {
         var speed = enemy.body.velocity.x;
         
         if (enemy.body.onWall() || enemy.body.touching.left || enemy.body.touching.right) {
-            enemy.facingRight = !enemy.facingRight;
+            enemy.facingLeft = !enemy.facingLeft;
         }
         
-        if (enemy.facingRight) {
-            speed = enemySpeed;
-        } else {
+        if (enemy.facingLeft) {
             speed = -enemySpeed;
+        } else {
+            speed = enemySpeed;
         }
         
         enemy.body.velocity.x = speed;
@@ -95,8 +112,22 @@ function moveEnemies() {
     }, this);
 }
 
+function moveEnemies() {
+    enemies.forEachAlive(function(enemy) {
+        var speed = enemy.body.velocity.x;
+        
+        if (enemy.facingLeft === true) {
+            speed = -enemySpeed;
+        } else if (enemy.facingLeft === false) {
+            speed = enemySpeed;
+        }
+        
+        enemy.body.velocity.x = speed;
+    }, this);
+}
+
 function movePlayer() {
-    var speed = 10, slowDown = 10, maxSpeed = 250, jumpHeight = 450;
+    var speed = 10, slowDown = 10, maxSpeed = 300, jumpHeight = 450;
     
     if (cursors.left.isDown) {
         if (player.body.velocity.x > 0) {
@@ -126,9 +157,19 @@ function movePlayer() {
 }
 
 function killPlayer() {
+    destroyGame();
+    resetGame();
+}
+
+function winGame() {
+    destroyGame();
+    resetGame();
+}
+
+function destroyGame() {
     player.destroy();
     enemies.destroy();
-    startNewGame();
+    objective.destroy();
 }
 
 function findObjectsByType(type, map, layer) {
@@ -154,4 +195,30 @@ function createFromTiledObject(element, group) {
 
 function scaleGame() {
     
+}
+
+function changeGameWithMusic() {
+    changeWorldWithMusic();
+    changeEnemyWithMusic();
+}
+
+// Alternate art on every beat or so
+function changeWorldWithMusic() {
+}
+
+// Animates enemies. Called on update
+function animateEnemies() {
+    
+}
+
+function changeEnemyWithMusic() {
+    enemies.forEachAlive(function(enemy) {
+        if (enemy.facingLeft === true) {
+            enemy.loadTexture('enemytile');
+            enemy.facingLeft = false;
+        } else if (enemy.facingLeft === false) {
+            enemy.loadTexture('enemytile2');
+            enemy.facingLeft = true;
+        }
+    }, this);
 }
