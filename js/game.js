@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
 
-var player, enemies, fires, objective, enemySpeed, tilemap, backgroundLayer, worldLayer, objectLayer, cursors;
+var player, enemies, fires, objective, enemySpeed, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music;
 
 function preload() {
     game.load.image('playertile', 'assets/playertile.png');
@@ -8,6 +8,7 @@ function preload() {
     game.load.image('enemytile2', 'assets/enemytile2.png');
     game.load.image('tileset', 'assets/tilesetcolours.png');
     game.load.image('wintile', 'assets/wintile.png');
+    game.load.audio('beat', 'assets/beat.wav');
     game.load.tilemap('tilemap', 'assets/tilemap.json', null, Phaser.Tilemap.TILED_JSON);
 }
 
@@ -17,8 +18,6 @@ function create() {
     cursors = game.input.keyboard.createCursorKeys();
     
     startNewGame();
-    
-    game.time.events.loop(1000, changeGameWithMusic, this);
 }
 
 function update() {
@@ -33,6 +32,10 @@ function startNewGame() {
 }
 
 function resetGame() {
+    music.play();
+    
+    game.time.events.loop(469, changeGameWithMusic, this);
+    
     createObjective();
     createEnemies();
     createPlayer();
@@ -48,6 +51,9 @@ function createWorld() {
     tilemap.setCollision(2, true, 'worldLayer');
     
     backgroundLayer.resizeWorld();
+    
+    music = game.add.audio('beat');
+    music.loop = true;
 }
 
 function createObjective() {
@@ -113,11 +119,14 @@ function moveEnemiesBasic() {
 }
 
 function moveEnemies() {
+    
     enemies.forEachAlive(function(enemy) {
         var speed = enemy.body.velocity.x;
         
         if (enemy.facingLeft === true) {
             speed = -enemySpeed;
+            
+
         } else if (enemy.facingLeft === false) {
             speed = enemySpeed;
         }
@@ -127,7 +136,7 @@ function moveEnemies() {
 }
 
 function movePlayer() {
-    var speed = 10, slowDown = 10, maxSpeed = 300, jumpHeight = 450;
+    var speed = 10, slowDown = 10, maxSpeed = 300, jumpHeight = 375;
     
     if (cursors.left.isDown) {
         if (player.body.velocity.x > 0) {
@@ -157,16 +166,17 @@ function movePlayer() {
 }
 
 function killPlayer() {
-    destroyGame();
+    stopGame();
     resetGame();
 }
 
 function winGame() {
-    destroyGame();
+    stopGame();
     resetGame();
 }
 
-function destroyGame() {
+function stopGame() {
+    music.stop();
     player.destroy();
     enemies.destroy();
     objective.destroy();
@@ -212,6 +222,7 @@ function animateEnemies() {
 }
 
 function changeEnemyWithMusic() {
+    var jumpHeight = 90;
     enemies.forEachAlive(function(enemy) {
         if (enemy.facingLeft === true) {
             enemy.loadTexture('enemytile');
@@ -219,6 +230,9 @@ function changeEnemyWithMusic() {
         } else if (enemy.facingLeft === false) {
             enemy.loadTexture('enemytile2');
             enemy.facingLeft = true;
+            if (enemy.body.onFloor()) {
+                enemy.body.velocity.y = -jumpHeight;
+            }
         }
     }, this);
 }
