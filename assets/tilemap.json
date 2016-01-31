@@ -27,20 +27,6 @@
          "name":"objectLayer",
          "objects":[
                 {
-                 "gid":5,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "type":"player"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":128,
-                 "y":1400
-                }, 
-                {
                  "gid":7,
                  "height":0,
                  "name":"",
@@ -52,269 +38,403 @@
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":6160,
-                 "y":1424
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "forwardSpeed":"200",
-                     "goingForward":"true",
-                     "sprite":"enemytile",
-                     "subType":"grounded",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":472,
-                 "y":1384
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "forwardSpeed":"200",
-                     "goingForward":"true",
-                     "sprite":"enemytile",
-                     "subType":"grounded",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1248,
-                 "y":1392
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "forwardSpeed":"200",
-                     "goingForward":"true",
-                     "sprite":"enemytile",
-                     "subType":"grounded",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2064,
+                 "x":4072,
                  "y":1368
                 }, 
                 {
-                 "gid":8,
+                 "gid":11,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "type":"player"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":47,
+                 "y":1453
+                }, 
+                {
+                 "gid":15,
                  "height":0,
                  "name":"",
                  "properties":
                     {
                      "forwardSpeed":"200",
                      "goingForward":"true",
-                     "sprite":"enemytile",
+                     "sprite":"enemy",
                      "subType":"grounded",
                      "type":"enemy"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":3064,
+                 "x":755,
+                 "y":1344
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":576,
+                 "y":1083
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1816,
+                 "y":1139
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2952,
+                 "y":1147
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4128,
+                 "y":1147
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5328,
+                 "y":1179
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":6168,
+                 "y":1163
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1816,
+                 "y":1139
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"-200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1112,
+                 "y":1107
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"-200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2376,
+                 "y":1123
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"-200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3584,
+                 "y":1139
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"-200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4736,
+                 "y":1155
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "speed":"-200",
+                     "sprite":"enemy",
+                     "subType":"flying",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5728,
+                 "y":1163
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1363,
                  "y":1360
                 }, 
                 {
-                 "gid":8,
+                 "gid":15,
                  "height":0,
                  "name":"",
                  "properties":
                     {
                      "forwardSpeed":"200",
                      "goingForward":"true",
-                     "sprite":"enemytile",
+                     "sprite":"enemy",
                      "subType":"grounded",
                      "type":"enemy"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4008,
-                 "y":1376
+                 "x":1931,
+                 "y":1352
                 }, 
                 {
-                 "gid":8,
+                 "gid":15,
                  "height":0,
                  "name":"",
                  "properties":
                     {
                      "forwardSpeed":"200",
                      "goingForward":"true",
-                     "sprite":"enemytile",
+                     "sprite":"enemy",
                      "subType":"grounded",
                      "type":"enemy"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":4984,
+                 "x":2643,
+                 "y":1360
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3267,
+                 "y":1360
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3875,
+                 "y":1336
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4435,
+                 "y":1352
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4995,
+                 "y":1360
+                }, 
+                {
+                 "gid":15,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemy",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":5571,
                  "y":1368
                 }, 
                 {
-                 "gid":8,
+                 "gid":18,
                  "height":0,
                  "name":"",
                  "properties":
                     {
-                     "speed":"200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
+                     "sprite":"fire",
+                     "type":"fire"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":384,
-                 "y":1128
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"-200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1128,
-                 "y":1120
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"-200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2680,
-                 "y":1112
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"-200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3944,
-                 "y":1088
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"-200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5312,
-                 "y":1104
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1920,
-                 "y":1056
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3368,
-                 "y":1136
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4608,
-                 "y":1112
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "speed":"200",
-                     "sprite":"enemytile",
-                     "subType":"flying",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5968,
-                 "y":1112
+                 "x":252,
+                 "y":1472
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -359,6 +479,66 @@
          "spacing":0,
          "tileheight":128,
          "tilewidth":128
+        }, 
+        {
+         "firstgid":9,
+         "image":"actual\/player-walking.png",
+         "imageheight":64,
+         "imagewidth":213,
+         "margin":0,
+         "name":"player",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":64,
+         "tilewidth":43
+        }, 
+        {
+         "firstgid":13,
+         "image":"actual\/pear-dancing-monster.png",
+         "imageheight":128,
+         "imagewidth":420,
+         "margin":0,
+         "name":"enemy",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":128,
+         "tilewidth":105
+        }, 
+        {
+         "firstgid":17,
+         "image":"actual\/fire.png",
+         "imageheight":190,
+         "imagewidth":190,
+         "margin":0,
+         "name":"fire",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":190,
+         "tilewidth":190
+        }, 
+        {
+         "firstgid":18,
+         "image":"actual\/fire2.png",
+         "imageheight":64,
+         "imagewidth":64,
+         "margin":0,
+         "name":"fire2",
+         "properties":
+            {
+
+            },
+         "spacing":0,
+         "tileheight":64,
+         "tilewidth":64
         }],
  "tilewidth":64,
  "version":1,
