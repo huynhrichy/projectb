@@ -94,6 +94,10 @@ function createEnemies() {
             enemy.body.gravity.y = 200;
             enemy.forwardSpeed = game.rnd.integerInRange(200, 300);
             //enemy.body.velocity.x = -enemy.forwardSpeed;
+        } else if (enemy.subType === 'flying') {
+            enemy.speed = game.rnd.integerInRange(200, 300);
+            enemy.body.velocity.x = -enemy.speed;
+            enemy.body.velocity.y = game.rnd.integerInRange(200, 300);
         }
     }, this);
     
@@ -107,28 +111,9 @@ function createEnemies() {
 function handleCollision() {
     game.physics.arcade.collide(player, worldLayer);
     game.physics.arcade.collide(enemies, worldLayer);
-    game.physics.arcade.collide(enemies);
+    //game.physics.arcade.collide(enemies);
     game.physics.arcade.overlap(player, objective, winGame);
     game.physics.arcade.overlap(player, enemies, killPlayer);
-}
-
-function moveEnemiesBasic() {
-    enemies.forEachAlive(function(enemy) {
-        var speed = enemy.body.velocity.x;
-        
-        if (enemy.body.onWall() || enemy.body.touching.left || enemy.body.touching.right) {
-            enemy.facingLeft = !enemy.facingLeft;
-        }
-        
-        if (enemy.facingLeft) {
-            speed = -enemySpeed;
-        } else {
-            speed = enemySpeed;
-        }
-        
-        enemy.body.velocity.x = speed;
-        
-    }, this);
 }
 
 function moveEnemies() {
@@ -152,7 +137,17 @@ function moveEnemies() {
 
             enemy.body.velocity.x = speed;
         } else if (enemy.subType === 'flying') {
+            var speed = enemy.body.velocity.x;
             
+            if (enemy.x == 0) {
+                speed = enemy.speed;
+            } 
+            
+            if (enemy.x == game.world.width - enemy.width) {
+                speed = -enemy.speed;
+            }
+            
+            enemy.body.velocity.x = speed;
         }
     }, this);
     
@@ -286,9 +281,17 @@ function changeEnemyWithMusic2() {
         if (enemy.subType === 'grounded' && enemy.body.onFloor()) {
             enemy.goingForward = !enemy.goingForward;
         } else if (enemy.subType === 'flying') {
-            
+            if (enemy.body.velocity.y >= 0) {
+                enemy.body.velocity.y = -enemy.body.velocity.y;
+            } else {
+                enemy.body.velocity.y = -enemy.body.velocity.y;
+            }
         }
     }, this);
+}
+
+function resetPositions() {
+    //play
 }
 
 function changeEnemyWithMusic1() {
