@@ -4,7 +4,7 @@ var player, enemies, fires, objective, tilemap, backgroundLayer, worldLayer, obj
 
 var PEAR_SIZE = 0.75;
 var PLAYER_GRAVITY = 600;
-var PLAYER_JUMP = 375; 
+var PLAYER_JUMP = 390; 
 
 var playState = {
     preload: function() {
@@ -41,12 +41,12 @@ var playState = {
     },
 
     render: function() {
-        game.debug.body(player);
+        //game.debug.body(player);
         enemies.forEach(function(enemy) {
-            game.debug.body(enemy);
+          //  game.debug.body(enemy);
         });
         fires.forEach(function(fire) {
-            game.debug.body(fire);
+            //game.debug.body(fire);
         });
         
         var daTimeLeft = 101 - this.game.time.totalElapsedSeconds().toFixed(0);
