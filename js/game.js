@@ -1,4 +1,4 @@
-var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
+var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update, render: render});
 
 var player, enemies, fires, objective, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music;
 
@@ -32,6 +32,16 @@ function update() {
     moveEnemies();
 }
 
+function render() {
+    game.debug.body(player);
+    enemies.forEach(function(enemy) {
+        game.debug.body(enemy);
+    });
+    fires.forEach(function(fire) {
+        game.debug.body(fire);
+    });
+}
+
 function startNewGame() {
     
     music = game.add.audio('beat');
@@ -50,9 +60,9 @@ function resetGame() {
     
     game.time.events.resume();
     createWorld();
+    createFires();
     createObjective();
     createEnemies();
-    createFires();
     createPlayer();
 }
 
@@ -75,6 +85,12 @@ function createFires() {
     objects.forEach(function(element) {
         createFromTiledObject(element, fires);
     });
+    
+    fires.forEach(function(fire) {
+        // Normally 64 x 64
+        fire.body.setSize(64 * .75, 64 * .75, 10, 18);
+    });
+    
 }
 
 function createObjective() {
@@ -88,6 +104,12 @@ function createPlayer() {
     player = game.add.sprite(objects[0].x, objects[0].y, 'player', 3);
     player.animations.add('right', [0, 1, 2, 3], 10, true);
     game.physics.arcade.enable(player);
+    
+    // Normally 43 x 64
+    player.body.setSize(43 * 0.67, 64 * 0.75, -2, -5);
+    
+    player.anchor.setTo(.5, 1);
+    
     player.body.collideWorldBounds = true;
     player.body.gravity.y = 300;
     player.body.bounce.y = 0.1;
@@ -104,6 +126,19 @@ function createEnemies() {
     objects.forEach(function(element) {
         createFromTiledObject(element, enemies);
     });
+    
+    enemies.forEach(function(enemy) {
+        
+        
+        if (enemy.subType === 'grounded') {
+            // Normally 105 x 64
+            enemy.body.setSize(64 * .75, 105, 0, 0);
+        } else if (enemy.subType ==='flying') {
+            
+        }
+        enemy.anchor.setTo(.5, 1);
+    });
+    
     
     enemies.forEachAlive(function(enemy) {
         enemy.body.velocity.x = 0;
@@ -277,7 +312,7 @@ function scaleGame() {
 
 function changeGameWithMusic() {
     changeWorldWithMusic();
-    changeEnemyWithMusic2();
+    changeEnemyWithMusic();
 }
 
 function changeGameWithMusicLongerInterval() {
@@ -305,7 +340,7 @@ function animateEnemies() {
 
 // If enemy is grounded, change direction between forward and back
 // If flying, change direction between up and down
-function changeEnemyWithMusic2() {
+function changeEnemyWithMusic() {
     enemies.forEachAlive(function(enemy) {
         if (enemy.subType === 'grounded' && enemy.body.onFloor()) {
             enemy.goingForward = !enemy.goingForward;
@@ -320,21 +355,4 @@ function changeEnemyWithMusic2() {
 }
 
 function resetPositions() {
-    //play
-}
-
-function changeEnemyWithMusic1() {
-    var jumpHeight = 90;
-    enemies.forEachAlive(function(enemy) {
-        if (enemy.facingLeft === true) {
-            enemy.loadTexture('enemytile');
-            enemy.facingLeft = false;
-        } else if (enemy.facingLeft === false) {
-            enemy.loadTexture('enemytile2');
-            enemy.facingLeft = true;
-            if (enemy.body.onFloor()) {
-                enemy.body.velocity.y = -jumpHeight;
-            }
-        }
-    }, this);
 }
