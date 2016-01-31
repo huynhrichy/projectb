@@ -1,6 +1,10 @@
 //var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update, render: render});
 
-var player, enemies, fires, objective, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music, discoball, discoBallFrame, jumpSound, dieSound, winSound;
+var player, enemies, fires, objective, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music, discoball, discoBallFrame, jumpSound, dieSound, winSound, timer, time, playerStartingX = 0;
+
+var PEAR_SIZE = 0.75;
+var PLAYER_GRAVITY = 600;
+var PLAYER_JUMP = 375; 
 
 var playState = {
     preload: function() {
@@ -37,13 +41,22 @@ var playState = {
     },
 
     render: function() {
-        //game.debug.body(player);
+        game.debug.body(player);
         enemies.forEach(function(enemy) {
-            //game.debug.body(enemy);
+            game.debug.body(enemy);
         });
         fires.forEach(function(fire) {
-            //game.debug.body(fire);
+            game.debug.body(fire);
         });
+        
+        var daTimeLeft = 101 - this.game.time.totalElapsedSeconds().toFixed(0);
+        
+        if (daTimeLeft >= 0) {
+            game.debug.text(daTimeLeft, 10, 20);
+        } else {
+            game.debug.text(0, 10, 20);
+        }
+
     }
 };
 
@@ -60,7 +73,7 @@ function startNewGame() {
 
     this.resetGame();
 
-    game.time.events.loop(469, this.changeGameWithMusic, this);
+    game.time.events.loop(469 * 1, this.changeGameWithMusic, this);
     game.time.events.loop(469 * 4, this.changeGameWithMusicLongerInterval, this);
 }
 
@@ -93,6 +106,19 @@ function createWorld() {
     discoBallFrame = 1;
     discoball.fixedToCamera = true;
     discoball.scale.setTo(0.67, 0.67);
+    
+    // timer
+    timer = game.time.create(false);
+    
+    //timer.
+    
+    var inGameTime = game.add.text(10, 10, timer.duration.toFixed(0), { font: '25px Arial', fill: '#ffffff'});
+    //inGameTime.fixedToCamera = true;
+    
+        //var startLabel = game.add.text(game.world.centerX, -50, 'OOGA BOOGA press up to play', 
+        //                               { font: '25px Arial', fill: '#ffffff'});
+    
+    timer.start();
 }
 
 function createFires() {
@@ -106,7 +132,7 @@ function createFires() {
     fires.forEach(function(fire) {
         // Normally 64 x 64
         fire.body.setSize(64 * .5, 64 * .75, 10, 18);
-        fire.animations.add('fire', [0, 1, 2, 3], 8, true);
+        fire.animations.add('fire', [0, 1, 2, 3], 2, true);
         fire.animations.play('fire');
     });
     
@@ -121,7 +147,14 @@ function createObjective() {
 
 function createPlayer() {
     objects = this.findObjectsByType('player', tilemap, 'objectLayer');
-    player = game.add.sprite(objects[0].x, objects[0].y, 'player', 3);
+    
+    if (playerStartingX === 0) {
+        playerStartingX = objects[0].x;
+    }
+    
+    player = game.add.sprite(playerStartingX, objects[0].y, 'player', 3);
+    
+    
     player.animations.add('right', [0, 1, 2, 3], 10, true);
     game.physics.arcade.enable(player);
 
@@ -131,13 +164,14 @@ function createPlayer() {
     player.anchor.setTo(.5, 1);
 
     player.body.collideWorldBounds = true;
-    player.body.gravity.y = 300;
+    player.body.gravity.y = PLAYER_GRAVITY;
     player.body.bounce.y = 0.1;
     player.scale.setTo(0.75, 0.75);
     game.camera.follow(player);
 }
 
 function createEnemies() {
+    
     enemies = game.add.group();
     enemies.enableBody = true;
 
@@ -148,6 +182,8 @@ function createEnemies() {
     });
 
     enemies.forEach(function(enemy) {
+        enemy.scale.setTo(PEAR_SIZE, PEAR_SIZE);
+        
         if (enemy.subType === 'grounded') {
             // Normally 105 x 64
             enemy.body.setSize(64 * .75, 105, 0, 0);
@@ -162,7 +198,7 @@ function createEnemies() {
         enemy.body.velocity.x = 0;
         if (enemy.subType === 'grounded') {
             enemy.body.gravity.y = 200;
-            enemy.forwardSpeed = game.rnd.integerInRange(200, 300);
+            enemy.forwardSpeed = game.rnd.integerInRange(100, 200);
 
             //console.log('ayy');
             //console.log('grounded enemy frame: ' + enemy.frame);
@@ -170,10 +206,10 @@ function createEnemies() {
         } else if (enemy.subType === 'flying') {
             enemy.speed = game.rnd.integerInRange(200, 300);
             enemy.body.velocity.x = -enemy.speed;
-            enemy.body.velocity.y = game.rnd.integerInRange(300, 500);
+            enemy.body.velocity.y = game.rnd.integerInRange(300, 400);
             enemy.scale.x *= -1;
         }
-        enemy.animations.add('right', [0, 1, 2, 3], 4, true);
+        enemy.animations.add('right', [0, 1, 2, 3], 2, true);
     }, this);
 
     enemies.setAll('body.bounce.x', 0.2);
@@ -185,7 +221,7 @@ function handleCollision() {
     game.physics.arcade.collide(player, worldLayer);
     game.physics.arcade.collide(enemies, worldLayer);
     game.physics.arcade.overlap(player, objective, this.winGame);
-    //game.physics.arcade.overlap(player, enemies, this.killPlayer);
+    game.physics.arcade.overlap(player, enemies, this.killPlayer);
     game.physics.arcade.overlap(player, fires, this.killPlayer);
 }
 
@@ -211,12 +247,12 @@ function moveEnemies() {
                     if (enemy.scale.x < 0) {
                         enemy.scale.x *= -1;
                     }
-                    speed = enemy.forwardSpeed / 2;
+                    speed = enemy.forwardSpeed * 1.5;
                 } else {
                     if (enemy.scale.x >= 0) {
                         enemy.scale.x *= -1;
                     }
-                    speed = -enemy.forwardSpeed / 4;
+                    speed = -enemy.forwardSpeed * 1.25;
                 }
             }
             enemy.animations.play('right');
@@ -225,12 +261,12 @@ function moveEnemies() {
         } else if (enemy.subType === 'flying') {
             var speed = enemy.body.velocity.x;
 
-            if (enemy.x == 0) {
+            if (enemy.x == 0 || enemy.x < player.x - 600) {
                 enemy.scale.x *= -1;
-                speed = enemy.speed;
+                speed = enemy.speed * 1.67;
             } 
 
-            if (enemy.x == game.world.width - enemy.width) {
+            if (enemy.x == game.world.width) {
                 enemy.scale.x *= -1;
                 speed = -enemy.speed;
             }
@@ -243,7 +279,7 @@ function moveEnemies() {
 }
 
 function movePlayer() {
-    var speed = 100, slowDown = 10, maxSpeed = 300, jumpHeight = 300;
+    var speed = 10, slowDown = 10, maxSpeed = 200, jumpHeight = PLAYER_JUMP;
 
     if (cursors.left.isDown) {
         if (player.scale.x >= 0) {
@@ -284,6 +320,7 @@ function movePlayer() {
 
 function killPlayer() {
     dieSound.play();
+    playerStartingX = player.x * .67;
     stopGame();
     resetGame();
 }
