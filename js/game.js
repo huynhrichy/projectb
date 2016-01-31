@@ -1,6 +1,6 @@
 var game = new Phaser.Game(800, 600, Phaser.AUTO, '', {preload: preload, create: create, update: update});
 
-var player, enemies, fires, objective, enemySpeed, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music;
+var player, enemies, fires, objective, tilemap, backgroundLayer, worldLayer, objectLayer, cursors, music;
 
 function preload() {
     game.load.image('playertile', 'assets/playertile.png');
@@ -29,12 +29,15 @@ function update() {
 function startNewGame() {
     createWorld();
     resetGame();
+    
+    game.time.events.loop(469 / 2, changeGameWithMusic, this);
+    game.time.events.loop(469 * 4, changeGameWithMusicLongerInterval, this);
 }
 
 function resetGame() {
     music.play();
     
-    game.time.events.loop(469, changeGameWithMusic, this);
+    game.time.events.resume();
     
     createObjective();
     createEnemies();
@@ -63,7 +66,7 @@ function createObjective() {
 }
 
 function createPlayer() {
-    objects = findObjectsByType('playerStart', tilemap, 'objectLayer');
+    objects = findObjectsByType('player', tilemap, 'objectLayer');
     player = game.add.sprite(objects[0].x, objects[0].y, 'playertile');
     game.physics.arcade.enable(player);
     player.body.collideWorldBounds = true;
@@ -83,12 +86,22 @@ function createEnemies() {
         createFromTiledObject(element, enemies);
     });
     
-    enemies.setAll('facingLeft', true, false, false, 0, true);
-    enemies.setAll('body.gravity.y', 200);
+    //enemies.setAll('body.gravity.y', 200);
+    
+    enemies.forEachAlive(function(enemy) {
+        enemy.body.velocity.x = 0;
+        if (enemy.subType === 'grounded') {
+            enemy.body.gravity.y = 200;
+            enemy.forwardSpeed = game.rnd.integerInRange(200, 300);
+            //enemy.body.velocity.x = -enemy.forwardSpeed;
+        }
+    }, this);
+    
+    enemies.setAll('body.bounce.x', 0.2);
     enemies.setAll('body.bounce.y', 0.2);
     enemies.setAll('body.collideWorldBounds', true);
-    enemySpeed = 175;
-    enemies.setAll('body.velocity.x', -enemySpeed);
+    //enemySpeed = 175;
+    //enemies.setAll('body.velocity.x', -enemySpeed);
 }
 
 function handleCollision() {
@@ -119,24 +132,54 @@ function moveEnemiesBasic() {
 }
 
 function moveEnemies() {
-    
     enemies.forEachAlive(function(enemy) {
-        var speed = enemy.body.velocity.x;
-        
-        if (enemy.facingLeft === true) {
-            speed = -enemySpeed;
+        if (enemy.subType === 'grounded') {
+            var speed;
             
+            if (player.x < enemy.x) {
+                if (enemy.goingForward) {
+                    speed = -enemy.forwardSpeed;
+                } else {
+                    speed = enemy.forwardSpeed / 2;
+                }
+            } else if (player.x > enemy.x) {
+                if (enemy.goingForward) {
+                    speed = enemy.forwardSpeed / 2;
+                } else {
+                    speed = -enemy.forwardSpeed / 4;
+                }
+            }
 
-        } else if (enemy.facingLeft === false) {
-            speed = enemySpeed;
+            enemy.body.velocity.x = speed;
+        } else if (enemy.subType === 'flying') {
+            
         }
-        
-        enemy.body.velocity.x = speed;
     }, this);
+    
+    /*
+    enemies.forEachAlive(function(enemy) {
+        
+        if (enemy.subType === 'a') {
+            var speed = enemy.body.velocity.x;
+
+            if (enemy.facingLeft === true) {
+                speed = -enemySpeed;
+
+
+            } else if (enemy.facingLeft === false) {
+                speed = enemySpeed;
+            }
+
+            enemy.body.velocity.x = speed;
+        } else if (enemy.subType === 'b') {
+            
+        }
+    }, this);
+    */
 }
 
 function movePlayer() {
-    var speed = 10, slowDown = 10, maxSpeed = 300, jumpHeight = 375;
+    var speed = 100, slowDown = 10, maxSpeed = 300, jumpHeight = 325;
     
     if (cursors.left.isDown) {
         if (player.body.velocity.x > 0) {
@@ -177,6 +220,7 @@ function winGame() {
 
 function stopGame() {
     music.stop();
+    game.time.events.pause();
     player.destroy();
     enemies.destroy();
     objective.destroy();
@@ -209,7 +253,21 @@ function scaleGame() {
 
 function changeGameWithMusic() {
     changeWorldWithMusic();
-    changeEnemyWithMusic();
+    changeEnemyWithMusic2();
+}
+
+function changeGameWithMusicLongerInterval() {
+    changeEnemyWithMusicLongerInterval();
+}
+
+function changeEnemyWithMusicLongerInterval() {
+    enemies.forEachAlive(function(enemy) {
+        if (enemy.subType === 'grounded') {
+            //enemy.body.velocity.y = -50;
+        } else if (enemy.subType === 'flying') {
+            
+        }
+    }, this);
 }
 
 // Alternate art on every beat or so
@@ -221,7 +279,19 @@ function animateEnemies() {
     
 }
 
-function changeEnemyWithMusic() {
+// If enemy is grounded, change direction between forward and back
+// If flying, change direction between up and down
+function changeEnemyWithMusic2() {
+    enemies.forEachAlive(function(enemy) {
+        if (enemy.subType === 'grounded' && enemy.body.onFloor()) {
+            enemy.goingForward = !enemy.goingForward;
+        } else if (enemy.subType === 'flying') {
+            
+        }
+    }, this);
+}
+
+function changeEnemyWithMusic1() {
     var jumpHeight = 90;
     enemies.forEachAlive(function(enemy) {
         if (enemy.facingLeft === true) {

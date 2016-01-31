@@ -32,103 +32,13 @@
                  "name":"",
                  "properties":
                     {
-                     "type":"playerStart"
+                     "type":"player"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
                  "x":128,
                  "y":1400
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":1144,
-                 "y":1400
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":2072,
-                 "y":1392
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3080,
-                 "y":1360
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":3944,
-                 "y":1376
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":4824,
-                 "y":1392
-                }, 
-                {
-                 "gid":8,
-                 "height":0,
-                 "name":"",
-                 "properties":
-                    {
-                     "sprite":"enemytile",
-                     "type":"enemy"
-                    },
-                 "type":"",
-                 "visible":true,
-                 "width":0,
-                 "x":5520,
-                 "y":1376
                 }, 
                 {
                  "gid":7,
@@ -151,14 +61,107 @@
                  "name":"",
                  "properties":
                     {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
                      "sprite":"enemytile",
+                     "subType":"grounded",
                      "type":"enemy"
                     },
                  "type":"",
                  "visible":true,
                  "width":0,
-                 "x":520,
-                 "y":1408
+                 "x":472,
+                 "y":1384
+                }, 
+                {
+                 "gid":8,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemytile",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":1248,
+                 "y":1392
+                }, 
+                {
+                 "gid":8,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemytile",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":2064,
+                 "y":1368
+                }, 
+                {
+                 "gid":8,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemytile",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3064,
+                 "y":1360
+                }, 
+                {
+                 "gid":8,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemytile",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":3984,
+                 "y":1376
+                }, 
+                {
+                 "gid":8,
+                 "height":0,
+                 "name":"",
+                 "properties":
+                    {
+                     "forwardSpeed":"200",
+                     "goingForward":"true",
+                     "sprite":"enemytile",
+                     "subType":"grounded",
+                     "type":"enemy"
+                    },
+                 "type":"",
+                 "visible":true,
+                 "width":0,
+                 "x":4984,
+                 "y":1368
                 }],
          "opacity":1,
          "type":"objectgroup",
