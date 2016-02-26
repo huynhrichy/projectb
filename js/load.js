@@ -13,7 +13,7 @@ var loadState = {
         game.load.image('enemytile2', 'assets/enemytile2.png');
         game.load.image('tileset', 'assets/tilesetcolours.png');
         game.load.image('wintile', 'assets/wintile.png');
-        game.load.audio('beat', 'assets/beat.wav');
+        game.load.audio('beat', 'assets/actual/beat.mp3');
 
         game.load.image('fire2', 'assets/actual/fire2.png');
         game.load.image('sky', 'assets/actual/sky.png');
